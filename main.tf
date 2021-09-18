@@ -25,10 +25,10 @@ resource "aws_s3_bucket" "bucket" {
   }
 }
 
-#terraform {
-#  backend "s3" {
-#    bucket = "terraform-lab-s3-state"
-#    key    = "terraform/stage/terraform.tfstate"
-#    region = "ap-northeast-1"
-#  }
-#}
+terraform {
+  backend "s3" {
+    bucket = "terraform-lab-s3-state"
+    key    = "terraform/stage/terraform.tfstate"
+    region = "ap-northeast-1"
+  }
+}
