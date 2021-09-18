@@ -4,7 +4,6 @@ provider "aws" {
 
 resource "aws_instance" "app" {
   instance_type     = "t2.micro"
-  availability_zone = "ap-northeast-1"
   ami               = "ami-02892a4ea9bfa2192"
 
   user_data = <<-EOF
@@ -17,6 +16,10 @@ resource "aws_s3_bucket" "bucket" {
   bucket = "terraform-lab-s3-state" 
   acl    = "private"
   
+  lifecycle {
+    prevent_destroy = true
+  }
+
   versioning {
     enabled = true
   }
