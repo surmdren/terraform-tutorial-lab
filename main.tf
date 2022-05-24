@@ -2,7 +2,10 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
+data "aws_availability_zones" "available" {}
+
 resource "aws_instance" "app" {
+  count             = "0"
   instance_type     = "t2.micro"
   ami               = "ami-02892a4ea9bfa2192"
 
