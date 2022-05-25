@@ -17,14 +17,21 @@ resource "aws_instance" "app" {
 
 resource "aws_s3_bucket" "bucket" {
   bucket = "terraform-lab-s3-state" 
-  acl    = "private"
   
   lifecycle {
     prevent_destroy = true
   }
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_acl" "bucket" {
+  bucket = aws_s3_bucket.bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "bucket" {
+  bucket = aws_s3_bucket.bucket.id
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 
@@ -33,22 +40,5 @@ terraform {
     bucket = "terraform-lab-s3-state"
     key    = "terraform/stage/terraform.tfstate"
     region = "ap-northeast-1"
-  }
-}
-
-
-variable "region" {
-  type    = string
-  default = "ap-northeast-1"
-}
-
-variable "service_name" {
-  type    = string
-  default = "mysvc"
-}
-
-locals {
-  availability_zones = {
-    ap-northeast-1 = ["ap-northeast-1a", "ap-northeast-1c"]
   }
 }
