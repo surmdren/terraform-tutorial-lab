@@ -4,6 +4,19 @@ provider "aws" {
 
 data "aws_availability_zones" "available" {}
 
+## for_each aws_instance
+# resource "aws_instance" "app" {
+#   for_each          = var.ec2_instance
+#   instance_type     = each.value.ami_type
+#   ami               = "ami-02892a4ea9bfa2192"
+
+#   user_data = <<-EOF
+#               #!/bin/bash
+#               sudo service apache2 start
+#               EOF
+# }
+
+# count aws_instance
 resource "aws_instance" "app" {
   count             = "0"
   instance_type     = "t2.micro"
@@ -14,6 +27,7 @@ resource "aws_instance" "app" {
               sudo service apache2 start
               EOF
 }
+
 
 resource "aws_s3_bucket" "bucket" {
   bucket = "terraform-lab-s3-state" 
