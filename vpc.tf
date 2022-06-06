@@ -33,9 +33,10 @@ resource "random_string" "suffix" {
 
 # Application VPC
 module "vpc" {
-  source  = "./modules/vpc/"
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "3.2.0"
 
-  create_vpc           = true
+  create_vpc           = false
   name                 = "education-vpc"
   cidr                 = "10.0.0.0/16"
   azs                  = data.aws_availability_zones.available.names
